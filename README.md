@@ -50,9 +50,10 @@ A team project to design a lexical analyzer for a custom programming language ca
 > Follow workflow to ensure smooth collaboration .
 
 ## Deliverables
-	•	Lexical analyzer for BotLang (C code)
-	•	Token stream output
-	•	Error messages with correction suggestions
-	•	Test suite with sample programs
-	•	Final documentation and dem
+     -Lexical analyzer for BotLang (C code)
+     -Token stream output
+     -Error messages with correction suggestions
+     -Test suite with sample programs
+     -Final documentation 
+     
  ---
