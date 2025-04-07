@@ -58,3 +58,10 @@ A team project to design a lexical analyzer for a custom programming language ca
      -Final documentation 
      
  ---
+
+## Team Members
+  - Divyanshi Rasotia
+  - Khushi Kumari Jha
+  - Shambhavee Shukla
+  - Bhawna Bisht
+
