@@ -1,0 +1,184 @@
+BotLang – Language Specification & Syntax Guide
+
+BotLang is a lightweight, beginner-friendly, robot-themed programming language developed as part of a compiler design project. Its core aim is to make understanding lexical analysis, tokenization, and syntax rules simple and fun. The language is inspired by robotic behaviors and minimalistic command structures, making it suitable for educational and illustrative purposes.
+
+--------------------------------------------------------------------------------
+1. Keywords
+
+These are reserved words in BotLang and cannot be used as identifiers. They are designed to sound like robot instructions or control commands.
+
+| Keyword     | Meaning / Traditional Equivalent        |
+|-------------|------------------------------------------|
+| boot        | Start of the program (main function)     |
+| shutdown    | End the program                          |
+| ping        | Input from user                          |
+| beep        | Output/print statement                   |
+| set         | Variable declaration and assignment      |
+| check       | If condition                             |
+| else        | Else block                               |
+| repeat      | Loop structure (like while/for)          |
+| stop        | Break loop                               |
+| go          | Continue loop                            |
+| function    | Function definition                      |
+| end         | End a block or function                  |
+| true        | Boolean true                             |
+| false       | Boolean false                            |
+| send        | Return statement                         |
+
+--------------------------------------------------------------------------------
+2. Operators
+
+| Type         | Operators                                |
+|--------------|------------------------------------------|
+| Arithmetic   | +  -  *  /  %                            |
+| Assignment   | =                                        |
+| Comparison   | ==  !=  >  <  >=  <=                     |
+| Logical      | &&  ||  !                                |
+
+--------------------------------------------------------------------------------
+3. Identifiers
+
+Identifiers are names used for variables, functions, and user-defined entities.
+
+- Must begin with a letter (A-Z, a-z) or underscore _
+- Can contain letters, digits (0–9), or underscores
+- Cannot be a keyword
+- Examples: sensor1, botName, battery_level, _position
+
+--------------------------------------------------------------------------------
+4. Literals
+
+| Type      | Examples                      |
+|-----------|-------------------------------|
+| Integer   | 10, -3, 0                      |
+| Float     | 3.14, 0.5                      |
+| String    | "Hello Bot!", "Zeno"          |
+| Boolean   | true, false                   |
+
+--------------------------------------------------------------------------------
+5. Delimiters
+
+- ; → End of statement
+- {} → Code block boundaries
+- () → Used in conditions or function calls
+- "" → String literals
+
+--------------------------------------------------------------------------------
+6. Program Structure
+
+A BotLang program always starts with boot {} and optionally ends with shutdown;.
+
+Example:
+boot {
+    // Your code here
+}
+
+--------------------------------------------------------------------------------
+7. Statements Overview
+
+Variable Declaration:
+set <identifier> = <value>;
+
+Example:
+set speed = 10;
+set name = "BotAlpha";
+
+Output (Print):
+beep <expression>;
+
+Example:
+beep "Hello Bot!";
+beep speed;
+
+Input:
+ping <identifier>;
+
+Example:
+ping userInput;
+
+Conditional:
+check (<condition>) {
+    <statements>
+} else {
+    <statements>
+}
+
+Example:
+check (speed > 0) {
+    beep "Moving...";
+} else {
+    beep "Stopped.";
+}
+
+Looping:
+repeat (<condition>) {
+    <statements>
+}
+
+Example:
+repeat (count < 5) {
+    beep count;
+    set count = count + 1;
+}
+
+Control Flow:
+stop;  // break
+go;    // continue
+
+--------------------------------------------------------------------------------
+8. Functions
+
+Function Definition:
+function <function_name>(<params>) {
+    <statements>
+    send <value>;  // optional
+}
+
+Example:
+function greet(name) {
+    beep "Hello " + name;
+    send 1;
+}
+
+Function Call:
+set result = greet("Zeno");
+
+--------------------------------------------------------------------------------
+9. Comments
+
+// This is a single-line comment
+
+/* 
+This is a multi-line comment
+Explaining code in detail
+*/
+
+--------------------------------------------------------------------------------
+10. Expressions
+
+| Type        | Examples                        |
+|-------------|---------------------------------|
+| Arithmetic  | speed + 1, distance * 2         |
+| Comparison  | x == y, temp > 100              |
+| Logical     | (x < y) && (z != 0)             |
+
+Example:
+check ((temp > 50) && (humidity < 60)) {
+    beep "Condition met";
+}
+
+--------------------------------------------------------------------------------
+11. Full Code Example (Putting It All Together)
+
+boot {
+    set speed = 10;
+    beep "Starting...";
+    repeat (speed > 0) {
+        beep "Moving...";
+        set speed = speed - 1;
+    }
+    shutdown;
+}
+
+--------------------------------------------------------------------------------
+End of BotLang Syntax Guide
