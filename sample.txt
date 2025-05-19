@@ -1,0 +1,10 @@
+boot
+
+ping name
+chek name == "Bhawna"
+    beep "Hello, Captain Bhawna!"
+els
+    beep "Hello, User!"
+end
+
+shutdown
