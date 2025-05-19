@@ -93,4 +93,3 @@ if uploaded_file is not None:
 
     if st.button("❌ Clear"):
         st.experimental_rerun()
-s

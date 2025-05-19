@@ -68,7 +68,7 @@ def analyze_code(filepath):
 
 # Main
 if __name__ == "__main__":
-    source_file = "sample.txt" 
+    source_file = "sample_for_lexicalanalysis.txt" 
     analyze_code(source_file)
 
     print("\n--- Symbol Table ---")
