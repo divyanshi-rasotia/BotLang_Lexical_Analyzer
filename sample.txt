@@ -1,0 +1,10 @@
+boot {
+  set speed = 10;
+  beep "Moving...";
+  repeat (speed > 0) {
+    beep speed;
+    set speed = speed - 1;
+  }
+  shutdown;
+}
+
