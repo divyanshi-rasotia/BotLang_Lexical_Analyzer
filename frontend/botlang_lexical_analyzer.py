@@ -48,7 +48,7 @@ def lexical_analyze(text):
     suggestions = []
 
     keywords = {"if", "else", "for", "while", "return", "int", "float"}
-    pattern = r'\b\w+\b|[{}();=+\-*/<>]'
+    pattern = r'"[^"]*"|\b\w+\b|[{}();=+\-*/<>]|[^\w\s]+'
 
     for match in re.finditer(pattern, text):
         token = match.group()
@@ -56,6 +56,8 @@ def lexical_analyze(text):
             tokens.append(f"Keyword: {token}")
         elif token.isdigit():
             tokens.append(f"Integer: {token}")
+        elif re.match(r'^"[^\"]*"$',token):
+            tokens.append(f"String: {token}")
         elif re.match(r'^[a-zA-Z_]\w*$', token):
             tokens.append(f"Identifier: {token}")
         elif token in "{}();=+-*/<>":
