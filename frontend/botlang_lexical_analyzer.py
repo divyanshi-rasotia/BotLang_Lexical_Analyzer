@@ -94,4 +94,4 @@ if uploaded_file is not None:
             st.markdown("<div class='suggestion'>No suggestions. Code looks clean!</div>", unsafe_allow_html=True)
 
     if st.button("❌ Clear"):
-        st.experimental_rerun()
+        st.rerun()
