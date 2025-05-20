@@ -1,5 +1,5 @@
 boot {
-  set speed = 10;
+  set !! speed = 10;
   beep "Moving...";
   repeat (speed > 0) {
     beep speed;
