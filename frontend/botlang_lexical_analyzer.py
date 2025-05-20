@@ -47,7 +47,8 @@ def lexical_analyze(text):
     errors = []
     suggestions = []
 
-    keywords = {"if", "else", "for", "while", "return", "int", "float"}
+    keywords = {"boot", "shutdown", "ping", "beep", "set", "check", "else", "repeat",
+    "stop", "go", "function", "end", "true", "false", "send"}
     pattern = r'"[^"]*"|\b\w+\b|[{}();=+\-*/<>]|[^\w\s]+'
 
     for match in re.finditer(pattern, text):
