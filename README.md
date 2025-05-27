@@ -86,7 +86,9 @@ BotLang is a domain-specific programming language created for educational and ex
 
 bash
 git clone https://github.com/divyanshi-rasotia/BotLang_Lexical_Analyzer
+
 cd botlang-lexical-analyzer
+
 streamlit run frontend.py
 
 
