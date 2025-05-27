@@ -85,17 +85,8 @@ BotLang is a domain-specific programming language created for educational and ex
 ### 1. Clone the Repository
 
 bash
-git clone https://github.com/your-username/botlang-lexical-analyzer.git
+git clone https://github.com/divyanshi-rasotia/BotLang_Lexical_Analyzer
 cd botlang-lexical-analyzer
-
-python -m venv venv
-
-# Activate Virtual Environment
-# Windows
-venv\Scripts\activate
-# macOS/Linux
-source venv/bin/activate
-
 streamlit run frontend.py
 
 
@@ -131,14 +122,23 @@ Common issues:
 
 
 botlang-lexical-analyzer/
+
 ├── frontend.py                    # Streamlit frontend
+
 ├── lexical.py                     # Core lexical analyzer logic
+
 ├── levenstein_distance.py         # Levenshtein-based keyword suggestion
+
 ├── error_handler.py               # error detection
+
 ├── input.bot                      # Example code file
+
 ├── BotLang_Description.txt        # Botlang Language description
+
 ├── README.md                      # Project documentation
+
 ├── screenshots/                   # Images used in README
+
 
 
 ---
