@@ -1,62 +1,29 @@
-import re
+def levenshtein_distance(a, b):
+    # Basic implementation
+    if len(a) < len(b):
+        return levenshtein_distance(b, a)
 
-def levenshtein_distance(a: str, b: str) -> int:
-    n, m = len(a), len(b)
-    if n > m:
-        a, b = b, a
-        n, m = m, n
+    if len(b) == 0:
+        return len(a)
 
-    current_row = list(range(n + 1))
-    for i in range(1, m + 1):
-        previous_row, current_row = current_row, [i] + [0] * n
-        for j in range(1, n + 1):
-            insert_cost = previous_row[j] + 1
-            delete_cost = current_row[j - 1] + 1
-            replace_cost = previous_row[j - 1] + (a[j - 1] != b[i - 1])
-            current_row[j] = min(insert_cost, delete_cost, replace_cost)
-    return current_row[n]
+    previous_row = range(len(b) + 1)
+    for i, c1 in enumerate(a):
+        current_row = [i + 1]
+        for j, c2 in enumerate(b):
+            insertions = previous_row[j + 1] + 1  
+            deletions = current_row[j] + 1        
+            substitutions = previous_row[j] + (c1 != c2)
+            current_row.append(min(insertions, deletions, substitutions))
+        previous_row = current_row
 
-def suggest_keywords(word, valid_keywords):
-    # Find the keyword with the smallest Levenshtein distance
-    closest_keyword = min(valid_keywords, key=lambda kw: levenshtein_distance(word, kw))
-    return closest_keyword
+    return previous_row[-1]
 
-def check_file_for_suggestions(file_path, botlang_keywords):
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
+def suggest_keywords(token, keywords, max_distance=2):
+    token = token.lower()
+    distances = [(kw, levenshtein_distance(token, kw)) for kw in keywords]
+    distances.sort(key=lambda x: x[1])
+    if distances and distances[0][1] <= max_distance:
+        return distances[0][0]  # return a single closest keyword string
+    return None
 
-    suggestions = {}
-    
-    for line_number, line in enumerate(lines, start=1):
-        # Extract all words, excluding content within double quotes (string literals)
-        string_literals = re.findall(r'"(.*?)"', line)
-        string_words = set()
-        for s in string_literals:
-            string_words.update(re.findall(r'\b\w+\b', s))
 
-        tokens = re.findall(r'\b\w+\b', line)
-        for token in tokens:
-            # Skip tokens inside string literals or numeric or boolean literals
-            if token in botlang_keywords or token in string_words or token.isdigit():
-                continue
-            if token in ["true", "false"]:
-                continue
-            # Suggest corrections only for unrecognized keywords
-            if token not in botlang_keywords and token not in string_words:
-                suggested = suggest_keywords(token, botlang_keywords)
-                suggestions[(line_number, token)] = suggested
-
-    return suggestions
-
-# --- MAIN PART ---
-botlang_keywords = [
-    "boot", "shutdown", "ping", "beep", "set", "check", "else", "repeat",
-    "stop", "go", "function", "end", "true", "false", "send"
-]
-
-file_path = "sample.txt"  # Replace with your file name
-
-output = check_file_for_suggestions(file_path, botlang_keywords)
-
-for (line_number, token), sugg in output.items():
-    print(f"Line {line_number}: Unrecognized: '{token}' → Did you mean: {sugg}?")

@@ -17,7 +17,7 @@ token_patterns = {
 }
 
 # Delimiters used for token splitting
-delimiters = r'(\s+|;|\{|\}|\(|\)|,|\+|\-|\|\/|=|<|>|!|\".?\"|\n)'
+delimiters = r'(\s+|;|\{|\}|\(|\)|,|\+|\-|\|\/|=|<|>|!|\".*?\"|\n)'
 
 # Symbol Table
 symbol_table = []
@@ -28,6 +28,7 @@ def classify_token(token):
     if token == "":
         return None
 
+    # Keywords take precedence
     if token in KEYWORDS:
         return "KEYWORD"
 
@@ -49,31 +50,45 @@ def classify_token(token):
     return "UNKNOWN"
 
 # Function to tokenize and analyze the code
-def analyze_code(filepath):
-    with open(filepath, 'r') as file:
-        line_num = 1
-        for line in file:
-            print(f"\nLine {line_num}: {line.strip()}")
-            tokens = re.split(delimiters, line)
-            for token in tokens:
-                token = token.strip()
-                if not token or token.isspace():
-                    continue
+def analyze_code(text):
+    display_tokens = []      # For showing in UI, e.g. "token --> type"
+    token_stream = []        # For error analysis: list of (token, token_type, line_num)
+    suggestions = []
+    lines = text.splitlines()
 
-                token_type = classify_token(token)
-                if token_type:
-                    symbol_table.append((token, token_type))
-                    print(f"  {token:15} --> {token_type}")
-            line_num += 1
+    for line_num, line in enumerate(lines, start=1):
+        split_tokens = re.split(delimiters, line)
+        for token in split_tokens:
+            token = token.strip()
+            if not token or token.isspace():
+                continue
 
-# Main
-if __name__ == "__main__":
-    source_file = "sample_for_lexicalanalysis.txt" 
-    analyze_code(source_file)
+            token_type = classify_token(token)
+            if token_type is None:
+                continue
 
-    print("\n--- Symbol Table ---")
-    for lexeme, token_type in symbol_table:
-        print(f"{lexeme:15} : {token_type}")
+            display_tokens.append(f"{token}  -->  {token_type}")
+            token_stream.append((token, token_type, line_num))
 
+    return display_tokens, token_stream, suggestions
 
-        
+# Helper: Group tokens by their type from token_stream
+def group_tokens_by_type(token_stream):
+    grouped = {
+        "KEYWORD": set(),
+        "IDENTIFIER": set(),
+        "NUMBER": set(),
+        "STRING": set(),
+        "OPERATOR": set(),
+        "DELIMITER": set(),
+        "UNKNOWN": set()
+    }
+    for token, token_type, _ in token_stream:
+        if token_type in grouped:
+            grouped[token_type].add(token)
+        else:
+            grouped["UNKNOWN"].add(token)
+    # Convert sets to sorted lists for nicer display
+    for key in grouped:
+        grouped[key] = sorted(grouped[key])
+    return grouped
